@@ -1,0 +1,18 @@
+name: Context Demo
+
+on:
+ workflow_dispatch:
+
+jobs:
+ context-demo:
+  runs-on: ubuntu-latest
+  steps:
+   - name: Show Github Information
+     run: |
+      echo "Repository: ${{github.repository}}"
+      echo "Triggered by: ${{ github.actor }}"
+      echo "Branch/Ref: ${{ github.ref }}"
+      echo "Commit: ${{ github.sha }}"
+      echo "Event: ${{ github.event_name }}"
+      echo "Workflow: ${{ github.workflow }}"
+
