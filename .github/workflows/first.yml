@@ -18,5 +18,10 @@ jobs:
        ls -la
        whoami
     - name: Step 4
-      run: echo "Workflow completed"
+      run: echo "Workflow for step is completed"
+   steps:
+    - name: Checkout repositoy
+      uses: actions/checkout@v7
+    - name: Show repository
+      run: ls -la
  
