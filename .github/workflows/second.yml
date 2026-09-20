@@ -1,18 +1,33 @@
-name: Context Demo
+name: Share Files Between Jobs
 
 on:
- workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
- context-demo:
-  runs-on: ubuntu-latest
-  steps:
-   - name: Show Github Information
-     run: |
-      echo "Repository: ${{github.repository}}"
-      echo "Triggered by: ${{ github.actor }}"
-      echo "Branch/Ref: ${{ github.ref }}"
-      echo "Commit: ${{ github.sha }}"
-      echo "Event: ${{ github.event_name }}"
-      echo "Workflow: ${{ github.workflow }}"
 
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create File
+        run: echo "hello" > demo.txt
+
+      - name: Upload File
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-file
+          path: demo.txt
+
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download File
+        uses: actions/download-artifact@v5
+        with:
+          name: demo-file
+
+      - name: Read File
+        run: cat demo.txt
