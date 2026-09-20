@@ -28,4 +28,9 @@ jobs:
    - name: Run Tests
      run: mvn test
    - name: Package
-     run: mvn package 
+     run: mvn package
+   - name: Upload Build Artifact
+     uses: actions/upload-artifact@v7
+     with:
+      name: java-application
+      path: target/*.jar 
