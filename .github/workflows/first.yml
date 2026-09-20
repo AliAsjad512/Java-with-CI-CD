@@ -1,35 +1,30 @@
+name: Java Build
+
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'src/**'
-      - 'pom.xml'
+ push:
+  branches:
+   - main
+ pull_request:
+  branches:
+   - main
+ workflow_dispatch:
 
-  pull_request:
-    branches:
-      - main
-
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: Select environment
-        required: true
-        type: choice
-        options:
-          - dev
-          - staging
-          - production
-
-jobs:                         # ✅ same level as "on:"
-  info:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Show Trigger Information
-        run: |
-          echo "Event = ${{ github.event_name }}"
-          echo "Actor = ${{ github.actor }}"
-          echo "Repository = ${{ github.repository }}"
-          echo "Ref = ${{ github.ref }}"
-          echo "SHA = ${{ github.sha }}"
+jobs:
+ build:
+  runs-on: ubuntu-latest
+  steps:
+   - name: Checkout Repository
+     uses: actions/checkout@v7
+   - name: Setup Java
+     uses: actions/setup-java@v6
+     with:
+      distribution: temurin
+      java-version: '21'
+   - name: Check Java
+     run: java --version
+   - name: Compile
+     run: mvn compile
+   - name: Run Tests
+     run: mvn test
+   - name: Package
+     run: mvn package 
