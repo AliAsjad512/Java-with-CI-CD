@@ -1,40 +1,20 @@
-name: Environment Variable Demo
+name: Multiple Jobs
 
 on:
-  workflow_dispatch:
-
-env:
-  APP_NAME: DevOps-Shack-App
+ workflow_dispatch:
 
 jobs:
-
-  demo:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Print Variable
-        run: echo "Application is $APP_NAME"
-
-  demo1:
-    runs-on: ubuntu-latest
-
-    env:
-      ENVIRONMENT: development
-
-    steps:
-      - run: echo "Environment is $ENVIRONMENT"
-      - name: Print repository variable
-        run: echo "Environment = ${{ vars.APP_ENV }}"
-      - name: Use Secret 
-        env:
-         PASSWORD: ${{ secrets.DEMO_PASSWORD }}
-        run: echo "Secret is configured"
-
-  demo2:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Step variable
-        env:
-          VERSION: "1.0"
-        run: echo "Version is $VERSION"
+ build:
+  runs-on: ubuntu-latest
+  steps:
+   - name: Build
+     run: |
+      echo "Building application..."
+      sleep 5
+ test:
+  runs-on: ubuntu-latest
+  steps:
+   - name: Test
+     run: |
+     echo "testing application..."
+     sleep 5
