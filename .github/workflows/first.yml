@@ -4,17 +4,17 @@ on:
  workflow_dispatch:
 
 jobs:
- build:
-  runs-on: ubuntu-latest
-  steps:
-   - name: Build
-     run: |
-      echo "Building application..."
-      sleep 5
- test:
-  runs-on: ubuntu-latest
-  steps:
-   - name: Test
-     run: |
-     echo "testing application..."
-     sleep 5
+  build:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Build
+       run: |
+        echo "Building application..."
+        sleep 5
+  test:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Test
+       run: |
+       echo "testing application..."
+       sleep 5
