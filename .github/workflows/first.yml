@@ -1,37 +1,75 @@
-name: Java Build
+name: Java CI Fundamentals
+run-name: Java CI - ${{ github.actor }} - ${{ github.ref_name }}
 
-on:
+on: 
  push:
   branches:
    - main
+   - 'feature/**'
+  paths:
+   - 'src/**'
+   - 'pom.xml'
  pull_request:
   branches:
    - main
  workflow_dispatch:
-
-jobs:
- build:
+  inputs:
+    java_version:
+     description: Java Version
+     required: true
+     default: '21'
+     type: choice
+     options:
+      - '17'
+      - '21'
+      - '25'
+   run_tests:
+    description: Run Tests
+    required: true
+    default: true
+    type: boolean
+  env:
+   APPLICATION_NAME: DevOps-Shack-JAVa-APP
+ concurrency:
+  group: java-ci-${{ github.ref }}
+  cancel-in-progress:true
+jobs: 
+ information:
   runs-on: ubuntu-latest
-  timeout-minutes: 10
   steps:
-   - name: Checkout Repository
-     uses: actions/checkout@v7
-   - name: Setup Java
-     uses: actions/setup-java@v6
-     with:
-      distribution: temurin
-      java-version: '21'
-      cache: maven
-   - name: Check Java
-     run: java --version
-   - name: Compile
-     run: mvn compile
-   - name: Run Tests
-     run: mvn test
-   - name: Package
-     run: mvn package
-   - name: Upload Build Artifact
-     uses: actions/upload-artifact@v7
-     with:
-      name: java-application
-      path: target/*.jar 
+   - name: Workflow Information
+     run: |
+      echo "Application: $APPLICATION_NAME"
+      echo "Repository: ${{ github.repository}}"
+      echo "Actor: ${{ github.actor }}"
+      echo "Event: ${{ github.event_name}}"
+      echo "Branch: ${{ github.ref_name }}"
+      echo "Commit: ${{ github.sha }}"
+   build:
+    needs: information
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+   steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v7
+    - name: Setup Java
+      uses: actions/setup-java@v6
+      with:
+       distribution: temurin
+       java-version: '21'
+       cache: maven
+    - name: Check Versions
+      run: |
+       java --version
+       mvn --version
+    - name: Compile Application
+      run: mvn compile
+    - name: Run Tests
+      run: mvn test
+    - name: Package Application
+      run: mvn package
+    - name: Upload Application
+      uses: actions/upload-artifact@v7
+      with:
+       name: jave-application
+       path: target/*.jar
