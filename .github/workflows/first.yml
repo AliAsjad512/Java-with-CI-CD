@@ -1,33 +1,35 @@
-name: Trigger Lab
 on:
- push:
-  branches:
-   - main
-  paths:
-   - 'src/**'
-   - 'pom.xml'
- pull_request:
-  branches:
-   - main
- workflow_dispatch:
-  inputs:
-   environment:
-    description: Select environment
-    required: true
-    type: choice
-    options:
-     - dev
-     - staging
-     - production
- jobs:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'pom.xml'
+
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Select environment
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - production
+
+jobs:                         # ✅ same level as "on:"
   info:
-   runs-on: ubuntu-latest
-   steps:
-    - name: Show Trigger Information
-      run: |
-       echo "Event = ${{ github.event_name }}"
-       echo "Actor = ${{ github.actor }}"
-       echo "Repository = ${{ github.repository }} "
-       echo "Ref = ${{ github.ref }}"
-       echo "SHA = ${{ github.sha }}"
-    
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show Trigger Information
+        run: |
+          echo "Event = ${{ github.event_name }}"
+          echo "Actor = ${{ github.actor }}"
+          echo "Repository = ${{ github.repository }}"
+          echo "Ref = ${{ github.ref }}"
+          echo "SHA = ${{ github.sha }}"
