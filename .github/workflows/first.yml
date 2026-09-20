@@ -28,6 +28,7 @@ jobs:
       - name: Use Secret 
         env:
          PASSWORD: ${{ secrets.DEMO_PASSWORD }}
+        run: echo "Secret is configured"
 
   demo2:
     runs-on: ubuntu-latest
