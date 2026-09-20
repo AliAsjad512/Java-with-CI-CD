@@ -7,14 +7,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-     - name: Build
-       run: |
-        echo "Building application..."
-        sleep 5
-  test:
-    runs-on: ubuntu-latest
-    steps:
-     - name: Test
-       run: |
-        echo "testing application..."
-        sleep 5
+     - name: Successful command
+       run: echo "Hello"
+     - name: Run on success
+       if:${{ success() }}
+       run: echo "Previous steps succeeded"
+     - name: Run on failure
+       if: ${{ failure() }}
+       run: echo "Something failed"
+     - name: Always execute
+       if: ${{always() }}
+       run: echo "Cleanup/reporting step"
