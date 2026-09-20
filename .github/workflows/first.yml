@@ -1,36 +1,33 @@
-name: Manual Workflow
-
+name: Trigger Lab
 on:
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: Select environment
-        required: true
-        type: choice
-        options:
-          - dev
-          - test
-          - prod
-
-      run_tests:
-        description: Run tests?
-        required: true
-        type: boolean
-        default: true
-
-      version:
-        description: Application version
-        required: true
-        type: string
-        default: "1.0.0"
-
-jobs:
-  demo:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Show inputs
-        run: |
-          echo "Environment = ${{ inputs.environment }}"
-          echo "Run tests = ${{ inputs.run_tests }}"
-          echo "Version = ${{ inputs.version }}"
+ push:
+  branches:
+   - main
+  paths:
+   - 'src/**'
+   - 'pom.xml'
+ pull_request:
+  branches:
+   - main
+ workflow_dispatch:
+  inputs:
+   environment:
+    description: Select environment
+    required: true
+    type: choice
+    options:
+     - dev
+     - staging
+     - production
+ jobs:
+  info:
+   runs-on: ubuntu-latest
+   steps:
+    - name: Show Trigger Information
+      run: |
+       echo "Event = ${{ github.event_name }}"
+       echo "Actor = ${{ github.actor }}"
+       echo "Repository = ${{ github.repository }} "
+       echo "Ref = ${{ github.ref }}"
+       echo "SHA = ${{ github.sha }}"
+    
