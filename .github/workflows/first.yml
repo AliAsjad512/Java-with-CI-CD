@@ -1,11 +1,22 @@
-name: My First GitHub Actions Workflow
+name: Basic Workflow
 
 on:
  workflow_dispatch:
 
 jobs:
- hello:
-  runs-on: ubuntu-latest
-  steps:
-   - name: Print Hello
-     run: echo "Hello from GitHub Actions one more time"
+  demo:
+   runs-on: ubuntu-latest
+   steps:
+    - name: Step 1
+      run: echo "Starting workflow"
+    - name: Step 2
+      run: echo "Running second step"
+    - name: Step 3
+      run: |
+       echo "Running multiple commands"
+       pwd
+       ls -la
+       whoami
+    - name: Step 4
+      run: echo "Workflow completed"
+ 
