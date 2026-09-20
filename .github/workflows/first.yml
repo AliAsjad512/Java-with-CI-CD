@@ -25,7 +25,7 @@ jobs:
       - run: echo "Environment is $ENVIRONMENT"
       - name: Print repository variable
         run: echo "Environment = ${{ vars.APP_ENV }}"
-      - name: Use Secrent 
+      - name: Use Secret 
         env:
          PASSWORD: ${{ secrets.DEMO_PASSWORD }}
 
