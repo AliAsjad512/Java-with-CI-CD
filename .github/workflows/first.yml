@@ -10,7 +10,7 @@ jobs:
      - name: Successful command
        run: echo "Hello"
      - name: Run on success
-       if:${{ success() }}
+       if: ${{ success() }}
        run: echo "Previous steps succeeded"
      - name: Run on failure
        if: ${{ failure() }}
